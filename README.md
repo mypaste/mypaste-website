@@ -29,7 +29,15 @@ bun run build
 bun run typecheck
 ```
 
-构建产物在 `dist/`，可部署到任意静态托管。GitHub Pages 请把源设置为 GitHub Actions 并构建本仓库；`base: "./"` 让产物支持子路径部署。
+构建产物在 `dist/`，可部署到任意静态托管。GitHub Pages 由 `.github/workflows/deploy-pages.yml` 在 `main` 推送时自动构建并发布，也可手动运行工作流；`base: "./"` 让产物支持项目子路径部署。
+
+## 线上访问
+
+- 首页：<https://mypaste.github.io/mypaste-website/>
+- 开发者文档：<https://mypaste.github.io/mypaste-website/docs/>
+- 插件应用市场：<https://mypaste.github.io/mypaste-website/plugins/>
+
+这是 GitHub 组织的项目 Pages 地址。如果要让站点直接位于组织根域 <https://mypaste.github.io/>，需要另建名为 `mypaste.github.io` 的仓库或设置自定义域名；不要把本项目改名为仓库根站点。
 
 ## 内容维护
 
