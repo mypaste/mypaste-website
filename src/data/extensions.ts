@@ -19,7 +19,7 @@ export interface SiteExtension {
 }
 
 /**
- * A curated display snapshot of mypaste-code-extensions/dist/index.json
+ * A curated display snapshot of mypaste-extensions-catalog/index.json
  * (generated 2026-11-11). IDs, names, versions, kinds and descriptions are
  * verbatim from the published index. Summary, category and tag belong to this
  * site only; they are not host protocol vocabulary.

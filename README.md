@@ -41,11 +41,12 @@ bun run typecheck
 
 ## 内容维护
 
-扩展目录来自 `mypaste-code-extensions/dist/index.json` 的展示快照，字段与分类写在 `src/data/extensions.ts`。替换扩展说明或增加扩展时，同时更新该文件与页面中的目录日期，并与发布索引逐条核对。
+扩展目录来自 `mypaste-extensions-catalog/index.json` 的展示快照，字段与分类写在 `src/data/extensions.ts`。替换扩展说明或增加扩展时，同时更新该文件与页面中的目录日期，并与发布索引逐条核对。
 
-协议正文不是自动导入 MyPaste 仓库 Markdown，而是面向站外读者的编辑版；字段与枚举必须与 MyPaste 仓库 `docs/PLUGINS.md` 一致。设计约定见 `DESIGN.md`。
+协议正文是本站维护的面向站外读者的编辑版；字段与枚举必须和宿主当前实现一致。设计约定见 `DESIGN.md`。
 
 ## 相关仓库
 
-- [MyPaste](https://github.com/zhanghuid/MyPaste)
-- [mypaste-code-extensions](https://github.com/zhanghuid/mypaste-code-extensions)
+- [MyPaste 宣传站](https://github.com/mypaste/mypaste-website)
+- [扩展发布目录](https://github.com/mypaste/mypaste-extensions-catalog)
+- [独立扩展仓库](https://github.com/orgs/mypaste/repositories?q=mypaste)
