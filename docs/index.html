@@ -13,7 +13,7 @@
     <svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden">
       <symbol id="i-clipboard" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4.5V3h6v1.5M8.5 10h7M8.5 14h7M8.5 18h4"/></symbol>
       <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M14 7l5 5-5 5"/></symbol>
-      <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 4.5 4.5"/></symbol>
+      <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12M7 11l5 5 5-5M5 20h14"/></symbol><symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 4.5 4.5"/></symbol>
       <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21.5zM4 5.5v16M9 8h7M9 12h5"/></symbol>
     </svg>
     <header class="site-header">
@@ -37,7 +37,7 @@
     <main id="main" class="page">
       <section class="docs-hero">
         <div data-reveal><span class="eyebrow">Developer Documentation · v3</span><h1>写一份边界清楚的扩展</h1><p>这份文档把 MyPaste 插件协议 v3 讲成一条可走通的路：声明 manifest，选择命令或表面形态，接入封闭服务，理解注册表裁决，再打包发布。字段与枚举以本文为准。</p></div>
-        <aside class="spec-card" data-reveal data-delay="100" aria-label="协议规格"><dl><dt>manifest</dt><dd>version 3</dd><dt>platform</dt><dd>macOS 13+</dd><dt>runtime</dt><dd>独立子进程</dd><dt>surfaces</dt><dd>剪切坞 / 设置</dd><dt>forms</dt><dd>实体类型</dd><dt>placement</dt><dd>3 个封闭值</dd></dl><p class="spec-note">v1 / v2 manifest 不再解析。官方扩展同样从市场安装，宿主没有内嵌字节或自动修复路径。</p></aside>
+        <aside class="spec-card" data-reveal data-delay="100" aria-label="协议规格"><dl><dt>manifest</dt><dd>version 3</dd><dt>platform</dt><dd>macOS 13+</dd><dt>runtime</dt><dd>独立子进程</dd><dt>surfaces</dt><dd>剪切坞 / 设置</dd><dt>forms</dt><dd>实体类型</dd><dt>placement</dt><dd>3 个封闭值</dd></dl><p class="spec-note">v1 / v2 manifest 不再解析。所有包都从市场安装，宿主不内嵌字节，也没有自动修复路径。</p></aside>
       </section>
 
       <div class="docs-shell">
@@ -101,7 +101,7 @@
             <span class="section-index">03 / CMD API</span>
             <h2>命令扩展：无 UI 的能力</h2>
             <p class="doc-lead">命令是「把实体交给逻辑，收回结果」。它可以出现在宿主的动作行、命令面板或后台触发，也可以不占界面、由别的表面通过注册表集成。</p>
-            <div class="field-table-wrap"><table class="field-table"><thead><tr><th>字段</th><th>契约</th><th>注意</th></tr></thead><tbody><tr><td>forms</td><td>输入实体类型，叶子或父类型。</td><td>语言不是裁决键，SQL 与 PHP 都是 <code>text</code>。</td></tr><tr><td>output</td><td>产出实体类型；缺省与 <code>forms</code> 相同。</td><td>只有显式声明才算文本产出者。</td></tr><tr><td>placement</td><td><code>palette</code>、<code>card-action</code>、<code>trigger</code>。</td><td>没有 <code>editor</code> / <code>workbench</code> 等旧词。</td></tr><tr><td>role</td><td>宿主驱动的封闭共享命令角色。</td><td>带 <code>role</code> 必须声明 <code>trigger</code> 与对应能力；同 manifest 内一个角色只能出现一次。</td></tr><tr><td>longRunning</td><td>可选布尔，缺省 <code>false</code>。</td><td>只有官方扩展实际获得 30 分钟预算；第三方仍按 10 秒。</td></tr></tbody></table></div>
+            <div class="field-table-wrap"><table class="field-table"><thead><tr><th>字段</th><th>契约</th><th>注意</th></tr></thead><tbody><tr><td>forms</td><td>输入实体类型，叶子或父类型。</td><td>语言不是裁决键，SQL 与 PHP 都是 <code>text</code>。</td></tr><tr><td>output</td><td>产出实体类型；缺省与 <code>forms</code> 相同。</td><td>只有显式声明才算文本产出者。</td></tr><tr><td>placement</td><td><code>palette</code>、<code>card-action</code>、<code>trigger</code>。</td><td>没有 <code>editor</code> / <code>workbench</code> 等旧词。</td></tr><tr><td>role</td><td>宿主驱动的封闭共享命令角色。</td><td>带 <code>role</code> 必须声明 <code>trigger</code> 与对应能力；同 manifest 内一个角色只能出现一次。</td></tr><tr><td>longRunning</td><td>可选布尔，缺省 <code>false</code>。</td><td>声明即生效，调用预算从 10 秒放宽到 30 分钟。</td></tr></tbody></table></div>
             <h3>三种 runtime 形态</h3>
             <p><code>command</code> 按命令启动子进程；<code>resident</code> 常驻并带退避重启与失败上限；只有 <code>menus</code>、没有 <code>surface</code> 的 <code>ui</code> 包不需要 <code>run.sh</code> 与 <code>runtime</code>。无论哪种形态，第三方代码都不会加载进宿主进程。</p>
             <div class="callout callout-green"><strong>能力是无头命令，表面是集成者</strong><p>一个格式化器不必做界面。声明作用于 <code>text</code> 的无 <code>placement</code> 命令，代码编辑器通过 <code>registry</code> 发现它并接入自己的工具栏。</p></div>
@@ -153,16 +153,16 @@
               <div class="service-item"><code>network.outbound</code><p>HTTPS、声明主机、宿主代理。</p></div>
               <div class="service-item"><code>storage.plugin</code><p>私有目录、配额、卸载即删除。</p></div>
               <div class="service-item"><code>companion.read</code><p>读本次调用的一条对照条目。</p></div>
-              <div class="service-item"><code>surface.network</code><p>官方表面文档的远程媒体与 fetch CSP 策略。</p></div>
+              <div class="service-item"><code>surface.network</code><p>本包表面文档的远程媒体与 fetch CSP 策略。</p></div>
               <div class="service-item"><code>backup.schedule</code><p>立即备份或读排程摘要。</p></div>
               <div class="service-item"><code>boards.control</code><p>看板与成员关系的封闭动作组与导出。</p></div>
               <div class="service-item"><code>saved-searches.control</code><p>保存搜索的封闭动作组。</p></div>
               <div class="service-item"><code>settings.data</code><p>一级菜单数据页的封闭 call 方法组。</p></div>
-              <div class="service-item locked"><code>backup.sync</code><p>官方扩展：不透明句柄、分块读写与 HTTPS 传输恢复。</p></div>
-              <div class="service-item locked"><code>data.read</code><p>官方扩展：宿主打开只读连接，返回受限 SELECT 结果。</p></div>
-              <div class="service-item locked"><code>asset.read</code><p>官方扩展：按条目 ID 返回 base64 资产分块。</p></div>
+              <div class="service-item"><code>backup.sync</code><p>不透明句柄、分块读写与 HTTPS 传输恢复。</p></div>
+              <div class="service-item"><code>data.read</code><p>宿主打开只读连接，返回受限 SELECT 结果。</p></div>
+              <div class="service-item"><code>asset.read</code><p>按条目 ID 返回 base64 资产分块。</p></div>
             </div>
-            <div class="callout"><strong>扩展没有状态写入口</strong><p>数据库、资产、偏好、密钥的直接读写入口都不存在。<code>data.read</code> / <code>asset.read</code> 是唯一的批量只读入口，且只对官方扩展开放；扩展永远拿不到路径或句柄。</p></div>
+            <div class="callout"><strong>扩展没有状态写入口</strong><p>数据库、资产、偏好、密钥的直接读写入口都不存在。<code>data.read</code> / <code>asset.read</code> 是批量只读入口，对任何已安装且已启用的包开放；宿主施加机械预算，扩展永远拿不到路径或句柄。</p></div>
           </section>
 
           <section class="doc-section" id="registry">
@@ -172,7 +172,7 @@
             <div class="field-table-wrap"><table class="field-table"><thead><tr><th>命中数</th><th>行为</th><th>用户状态</th></tr></thead><tbody><tr><td>0</td><td>宿主基线行为，例如 <code>plain</code> 文本用默认预览。</td><td>无选择</td></tr><tr><td>1</td><td>直接作为打开目标。</td><td>无选择</td></tr><tr><td>≥ 2</td><td>由用户选择；选择记为「用户拥有的默认值」。</td><td>记住默认值</td></tr></tbody></table></div>
             <p><code>resolve(entityType)</code> 返回唯一处理者，<code>list(entityType)</code> 返回全部适配者供表面集成或宿主画选择器。预览接入点不自动采用扩展：选择不记忆，关闭预览或切换条目即回到宿主内容。</p>
             <h3>安装即信任</h3>
-            <ul><li>第三方代码永远在独立子进程里运行，<code>command</code> 按调用启动，<code>resident</code> 常驻且有退避重启与失败上限。</li><li>安装对话框一次列清包来源、进程形态、危险能力与网络目的地；确认后只有一个启用 / 停用开关。</li><li>官方身份由宿主 <code>firstparty/pins.json</code> 钉住的内容摘要决定，不是内嵌字节；安装前按同一算法复核。</li><li>安装记录 <code>builtin</code> / <code>marketplace</code> / <code>manual</code> 只回答来源，<code>firstParty</code> 只回答内容身份。</li></ul>
+            <ul><li>第三方代码永远在独立子进程里运行，<code>command</code> 按调用启动，<code>resident</code> 常驻且有退避重启与失败上限。</li><li>安装对话框一次列清包来源、进程形态、危险能力与网络目的地；确认后只有一个启用 / 停用开关。</li><li>来源是安装事实：目录里 <code>publisher</code> 标签（<code>mypaste</code> / 仓库主机）只用于显示「由 MyPaste 组织发布」，不参与能力判断；宿主不钉住内容摘要、不内嵌包。</li><li>安装记录 <code>builtin</code> / <code>marketplace</code> / <code>manual</code> 只回答来源与批量选择，<code>publisher</code> 只回答发布方标签。</li></ul>
             <div class="callout callout-green"><strong>宿主不认识扩展的行为</strong><p>行为边界来自 manifest 的能力、展示位与封闭 role，结果按 Go 类型分派。宿主不按包 ID 或命令 ID 写特判，页面也不自己组合命令名。</p></div>
           </section>
 
@@ -181,10 +181,10 @@
             <h2>打包与发布</h2>
             <p class="doc-lead">发布的是可校验的包，不是一段能绕过宿主的安装脚本。索引地址由用户在宿主里配置，宿主在每次请求前重新校验地址，并且只从索引旁解析包 URL。</p>
             <h3>发布前检查</h3>
-            <ul><li>manifest 只用 <code>manifestVersion: 3</code>；ID、版本、能力、入口与所有封闭枚举词都通过解析。</li><li><code>run.sh</code> 可执行；只有 <code>menus</code> 的 <code>ui</code> 包不声明多余 runtime。</li><li>页面自测 <code>ready → item / theme</code>、保存、复制、关闭与 <code>result</code> 失败分支。</li><li>输出校验大小与 UTF-8；错误上下文不包含剪贴板正文、令牌或私密文件内容。</li><li>索引记录包 ID、名称、版本、kind、描述、文件名、SHA-256 与仓库地址；内容摘要按发布前同一算法复核。</li></ul>
+            <ul><li>manifest 只用 <code>manifestVersion: 3</code>；ID、版本、能力、入口与所有封闭枚举词都通过解析。</li><li><code>run.sh</code> 可执行；只有 <code>menus</code> 的 <code>ui</code> 包不声明多余 runtime。</li><li>页面自测 <code>ready → item / theme</code>、保存、复制、关闭与 <code>result</code> 失败分支。</li><li>输出校验大小与 UTF-8；错误上下文不包含剪贴板正文、令牌或私密文件内容。</li><li>索引记录包 ID、名称、版本、kind、描述、文件名、SHA-256 与仓库地址；安装按目录里的 SHA-256 复核字节。</li></ul>
             <div class="code-block"><div class="code-head"><span>index.json · shape</span><button class="copy-button" data-copy="#code-index" type="button">复制代码</button></div><pre id="code-index">{
   <span class="token-key">"version"</span>: <span class="token-number">1</span>,
-  <span class="token-key">"generated"</span>: <span class="token-string">"2026-11-11"</span>,
+  <span class="token-key">"generated"</span>: <span class="token-string">"2026-11-20"</span>,
   <span class="token-key">"packages"</span>: [{
     <span class="token-key">"id"</span>: <span class="token-string">"com.example.upper"</span>,
     <span class="token-key">"name"</span>: <span class="token-string">"大写转换"</span>,
@@ -207,7 +207,7 @@
         <div class="footer-brand"><a class="brand" href="../"><span class="brand-mark"><svg class="icon"><use href="#i-clipboard" /></svg></span><span><span class="brand-word">MyPaste</span><span class="brand-sub">Developer docs</span></span></a><p>把协议写成一条可校验的边界。扩展声明能力与展示位，宿主守住状态、路径与写入。</p></div>
         <div class="footer-col"><h3>文档</h3><a href="#model">模型与词表</a><a href="#quickstart">快速开始</a><a href="#services">服务清单</a><a href="#publish">发布流程</a></div>
         <div class="footer-col"><h3>站点</h3><a href="../">产品首页</a><a href="../plugins/">插件应用市场</a><a href="../#model">边界模型</a></div>
-        <div class="footer-col"><h3>协议</h3><a href="https://mypaste.github.io/mypaste-website/docs/">开发者文档</a><a href="https://github.com/mypaste/mypaste-extensions-catalog/blob/main/index.json">发布目录</a><span>v3 · 不向下兼容</span></div>
+        <div class="footer-col"><h3>协议与下载</h3><a href="https://github.com/mypaste/releases/releases/latest">下载桌面应用 ↗</a><a href="../docs/">开发者文档</a><a href="https://github.com/mypaste/mypaste-extensions-catalog/blob/main/index.json">发布目录</a><span>v3 · 不向下兼容</span></div>
       </div>
       <div class="footer-bottom"><span>© <span data-year>2026</span> MyPaste · Developer Documentation</span><span>Plugin Protocol v3 · Official Developer Documentation</span></div>
     </footer>

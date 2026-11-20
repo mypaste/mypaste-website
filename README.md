@@ -29,15 +29,15 @@ bun run build
 bun run typecheck
 ```
 
-构建产物在 `dist/`，可部署到任意静态托管。GitHub Pages 由 `.github/workflows/deploy-pages.yml` 在 `main` 推送时自动构建并发布，也可手动运行工作流；`base: "./"` 让产物支持项目子路径部署。
+构建产物在 `dist/`，可部署到任意静态托管。站点有两条发布路径：Cloudflare Pages 直接部署 `dist/` 到 <https://mypaste.whoops.space/>；GitHub Pages 从专用仓库 `mypaste/mypaste.github.io` 发布同一份产物到 <https://mypaste.github.io/>。`base: "./"` 让产物在根域与子路径下都能工作。
 
 ## 线上访问
 
-- 首页：<https://mypaste.github.io/mypaste-website/>
-- 开发者文档：<https://mypaste.github.io/mypaste-website/docs/>
-- 插件应用市场：<https://mypaste.github.io/mypaste-website/plugins/>
+- 首页：<https://mypaste.whoops.space/> · <https://mypaste.github.io/>
+- 开发者文档：<https://mypaste.whoops.space/docs/> · <https://mypaste.github.io/docs/>
+- 插件应用市场：<https://mypaste.whoops.space/plugins/> · <https://mypaste.github.io/plugins/>
 
-这是 GitHub 组织的项目 Pages 地址。如果要让站点直接位于组织根域 <https://mypaste.github.io/>，需要另建名为 `mypaste.github.io` 的仓库或设置自定义域名；不要把本项目改名为仓库根站点。
+两条路径服务的是同一份 `dist/`：Cloudflare 直接上传构建产物，GitHub Pages 用 `mypaste/mypaste.github.io` 仓库承载根域地址。不要把 `mypaste-website` 改名为仓库根站点。
 
 ## 内容维护
 
